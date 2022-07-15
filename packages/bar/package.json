@@ -1,0 +1,41 @@
+{
+  "name": "@acme/bar",
+  "version": "0.0.0-dev",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "wireit",
+    "clean": "wireit",
+    "compile": "wireit",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "semantic-release": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "npm run compile && cp package.json dist",
+      "dependencies": [
+        "clean",
+        "../../packages/foo:build"
+      ]
+    },
+    "compile": {
+      "command": "tsc -p ./tsconfig.build.json"
+    },
+    "clean": {
+      "command": "rm -rf ./dist"
+    },
+    "semantic-release": {
+      "command": "semantic-release"
+    }
+  },
+  "dependencies": {
+    "@acme/foo": "*"
+  },
+  "devDependencies": {
+    "typescript": "~4.7.4"
+  }
+}

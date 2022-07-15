@@ -1,0 +1,26 @@
+{
+  "name": "semantic-release-commit-filter",
+  "version": "0.0.0-dev",
+  "license": "MIT",
+  "description": "",
+  "keywords": [],
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "npm run eslint && npm run tscheck && npm run test:cov",
+    "test:r": "npm run mocha -- src/**/*.spec.ts",
+    "test:cov": "c8 --reporter text --exclude \"**/*.spec.ts\" --exclude \"**/testing/**\"  npm run test:r -- --no-timeouts",
+    "test:w": "npm run test:r -- --watch-files src --watch",
+    "lint": "npm run eslint && npm run tscheck",
+    "eslint": "node node_modules/eslint/bin/eslint \"src/**/*.{ts,tsx}\"",
+    "eslint:w": "watchexec -w src \"npm run eslint\"",
+    "eslint:fix": "npm run eslint -- --fix",
+    "tscheck": "tsc --noEmit",
+    "tscheck:w": "npm run tscheck -- --watch",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "peerDependencies": {},
+  "config": {},
+  "devDependencies": {
+    "typescript": "~4.7.4"
+  }
+}

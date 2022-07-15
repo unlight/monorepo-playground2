@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@acme/*": ["packages/*/src"],
+      "@acme/components/*": ["packages/components/src/*"]
+    },
+    "noEmit": true
+  }
+}
