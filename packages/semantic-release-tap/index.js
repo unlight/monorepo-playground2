@@ -1,12 +1,8 @@
-// const path = require('path');
-// const mapWorkspaces = require('@npmcli/map-workspaces');
-// const readPackage = require('read-package-json-fast');
-// const AggregateError = require('aggregate-error');
-// const semverMaxSatisfying = require('semver/ranges/max-satisfying');
 const { getGitRoot } = require('./get-git-root.js');
 const { getMapWorkspaces } = require('./get-map-workspaces.js');
 const { getCwdDistPackage } = require('./get-cwd-dist-package.js');
 const { getCwdPackage } = require('./get-cwd-package.js');
+const { getSatisfyingTagVersion } = require('./get-satisfying-tag-version.js');
 
 /**
  * @typedef {import('./types').Context} Context
@@ -18,11 +14,27 @@ const { getCwdPackage } = require('./get-cwd-package.js');
  * @param {Context} context
  */
 exports.verifyConditions = async function verifyConditions(pluginConfig, context) {
-  const { cwd, options } = context;
+  const { cwd, options, logger } = context;
   const root = await getGitRoot(cwd);
-  await getMapWorkspaces({ root, cwd });
-  await getCwdPackage({ cwd });
-  await getCwdDistPackage({ cwd, plugins: options.plugins });
+  const workspaces = await getMapWorkspaces({ root, cwd });
+  const cwdPackage = await getCwdPackage({ cwd });
+  // TODO: Check, this may fail
+  // await getCwdDistPackage({ cwd, plugins: options.plugins });
+
+  for (const [packageName, version] of Object.entries(cwdPackage.dependencies)) {
+    const dependencyWorkspaceFolder = workspaces.get(packageName);
+    if (!dependencyWorkspaceFolder) {
+      continue;
+    }
+    const satisfyingTagVersion = getSatisfyingTagVersion({
+      name: packageName,
+      range: version,
+    });
+    // Need to write here what will be next version, but we cant since we do not know commits from other package
+    logger.log(
+      `Dependency ${packageName} will be updated to version ${satisfyingTagVersion}`,
+    );
+  }
 };
 
 /**
@@ -44,9 +56,11 @@ exports.prepare = async function prepare(pluginConfig, context) {
       cwd: dependencyWorkspaceFolder,
       plugins: options.plugins,
     });
-    console.log('dependencyDistPackage', dependencyDistPackage);
-    console.log('version', version);
-    d(context);
+    const dependencyPackageName = dependencyDistPackage.name;
+    // find git version
+    // console.log('dependencyDistPackage', dependencyDistPackage);
+    // console.log('version', version);
+    // d(context);
     // console.log('cwdDistPackage', cwdDistPackage);
     // console.log('cwdDistPackage', cwdDistPackage);
     // const x = await dependencyFolder()

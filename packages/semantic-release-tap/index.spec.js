@@ -30,19 +30,24 @@ it('verifyConditions plugin', async () => {
 it('prepare plugin', async () => {
   const context = createContext({
     cwd: path.resolve(__dirname, '../../packages/semantic-release-tap'),
+    branch: {
+      channel: undefined,
+      tags: [
+        {
+          gitTag: 'semantic-release-tap-v0.2.0',
+          version: '0.2.0',
+        },
+        {
+          gitTag: 'semantic-release-tap-v0.3.0',
+          version: '0.3.0',
+        },
+      ],
+      type: 'release',
+      name: 'master',
+      accept: ['patch', 'minor', 'major'],
+      main: true,
+    },
   });
-  // console.log('context', context);
-  // plugin.pluginContext(context, {
-  //   cwdDistPackage: {
-  //     dependencies: {
-  //       '@acme/foo': '*',
-  //     },
-  //   },
-  //   workspaces: new Map([
-  //     ['@acme/bar', root + '/packages/bar'],
-  //     ['@acme/foo', root + '/packages/foo'],
-  //   ]),
-  // });
   await plugin.prepare({}, context);
 });
 

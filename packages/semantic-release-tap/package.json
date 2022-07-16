@@ -9,6 +9,7 @@
     "@acme/bar": "*",
     "@antongolub/git-root": "^1.5.7",
     "@npmcli/map-workspaces": "^2.0.3",
+    "find-versions": "^4.0.0",
     "read-package-json-fast": "^2.0.3",
     "semver": "^7.3.7"
   },
