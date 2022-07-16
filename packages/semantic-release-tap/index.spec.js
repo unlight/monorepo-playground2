@@ -1,40 +1,52 @@
+const path = require('path');
 const assert = require('assert/strict');
 const semanticRelease = require('semantic-release');
 const { gitRoot } = require('@antongolub/git-root');
 const { createContext } = require('./context.fixture.js');
+const git = require('semantic-release/lib/git');
+const semver = require('semver');
+const findVersions = require('find-versions');
 
 const plugin = require('./index.js');
 
-it.only('verifyConditions', async () => {
+it('smoke', async () => {
+  assert.ok(plugin);
+
+  const tags = await git.getTags('master');
+  tags.forEach(t => {
+    console.log('t', t);
+    const f = findVersions(t, { loose: true });
+    console.log('f', f);
+    // const x = semver.clean(t);
+    // console.log('x', x);
+  });
+});
+
+it('verifyConditions plugin', async () => {
   const context = createContext({ cwd: __dirname });
   await plugin.verifyConditions({}, context);
 });
 
-it.skip('prepare', async () => {
-  const root = gitRoot.sync();
-
-  const context = createContext();
-  plugin.pluginContext(context, {
-    cwdDistPackage: {
-      dependencies: {
-        '@acme/foo': '*',
-      },
-    },
-    workspaces: new Map([
-      ['@acme/bar', root + '/packages/bar'],
-      ['@acme/foo', root + '/packages/foo'],
-    ]),
+it('prepare plugin', async () => {
+  const context = createContext({
+    cwd: path.resolve(__dirname, '../../packages/semantic-release-tap'),
   });
-
+  // console.log('context', context);
+  // plugin.pluginContext(context, {
+  //   cwdDistPackage: {
+  //     dependencies: {
+  //       '@acme/foo': '*',
+  //     },
+  //   },
+  //   workspaces: new Map([
+  //     ['@acme/bar', root + '/packages/bar'],
+  //     ['@acme/foo', root + '/packages/foo'],
+  //   ]),
+  // });
   await plugin.prepare({}, context);
 });
 
-it.skip('dry run', async () => {
-  let pluginContext;
-  process.stdout.on(plugin.contextSymbol, data => {
-    pluginContext = data;
-  });
-
+it('dry run', async () => {
   await semanticRelease({
     dryRun: true,
     noCi: true,
@@ -42,10 +54,6 @@ it.skip('dry run', async () => {
     plugins: [plugin],
     repositoryUrl: '.',
   });
-
-  assert.ok(pluginContext);
-  assert.ok(pluginContext.root);
-  assert.ok(pluginContext.workspaces);
 });
 
 it.skip('integration semantic-release-tap', async () => {
@@ -87,10 +95,6 @@ it.skip('integration acme bar', async () => {
       cwd: root + '/packages/bar',
     },
   );
-});
-
-it.skip('smoke', () => {
-  assert.ok(plugin);
 });
 
 it.skip('semver playground', () => {

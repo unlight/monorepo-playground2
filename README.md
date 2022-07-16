@@ -15,6 +15,7 @@
   - [ ] need find api which works with workspaces
 - [ ] wireit
 - [ ] switch to mjs
+- [ ] remove @acme/bar from semantic-release-tap
 
 ## Commands
 
@@ -47,3 +48,5 @@
 ## Notes
 
 - wireit.[script] dependencies will executes in parallel
+- use `git rev-list --tags="semantic-release-tap?v[0-9]*\.*" --max-count=100` to find commits
+- use `git describe --tags --match="semantic-release-tap?v[0-9]*\.*" fb22bb56f5e0dc0b650c105370f898a8e85e062e` to find tag in commit
