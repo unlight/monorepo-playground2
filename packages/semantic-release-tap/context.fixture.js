@@ -65,7 +65,7 @@ const baseContext = {
       main: true,
     },
   ],
-  cwd: 'E:\\Dev\\monorepo-playground\\packages\\bar',
+  cwd: '.',
   env: {
     COLOR: '1',
   },
@@ -98,5 +98,8 @@ const baseContext = {
     originalRepositoryURL: 'git@github.com:unlight/monorepo-playground.git',
     dryRun: true,
   },
-  logger: 'Signale',
+  logger: {
+    log: console.log,
+    error: console.error,
+  },
 };

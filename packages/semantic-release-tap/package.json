@@ -6,6 +6,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@acme/bar": "0.*",
     "@antongolub/git-root": "^1.5.7",
     "@npmcli/map-workspaces": "^2.0.3",
     "read-package-json-fast": "^2.0.3",

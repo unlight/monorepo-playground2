@@ -1,11 +1,8 @@
 {
   "name": "@acme/bar",
   "version": "0.0.0-dev",
-  "main": "dist/index",
-  "types": "dist/index",
-  "files": [
-    "dist"
-  ],
+  "main": "./dist",
+  "types": "./dist",
   "scripts": {
     "build": "wireit",
     "clean": "wireit",
@@ -16,14 +13,11 @@
   },
   "wireit": {
     "build": {
-      "command": "npm run compile && cp package.json dist",
+      "command": "sh ../../Taskfile build",
       "dependencies": [
         "clean",
         "../../packages/foo:build"
       ]
-    },
-    "compile": {
-      "command": "tsc -p ./tsconfig.build.json"
     },
     "clean": {
       "command": "rm -rf ./dist"

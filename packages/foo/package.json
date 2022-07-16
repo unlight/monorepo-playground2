@@ -6,20 +6,16 @@
   "scripts": {
     "build": "wireit",
     "clean": "wireit",
-    "compile": "wireit",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
     "semantic-release": "wireit"
   },
   "wireit": {
     "build": {
-      "command": "npm run compile && cp package.json dist",
+      "command": "sh ../../Taskfile build",
       "dependencies": [
         "clean"
       ]
-    },
-    "compile": {
-      "command": "tsc -p ./tsconfig.build.json"
     },
     "clean": {
       "command": "rm -rf ./dist"
