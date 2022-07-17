@@ -9,6 +9,14 @@ build() {
   set +x
 }
 
+build_cp() {
+  set -x
+  mkdir -p ./dist
+  cp -rfv index.js -t ./dist
+  cp -fv package.json -t ./dist
+  set +x
+}
+
 build_pkgroll() {
   set -x
   rm -rf dist
