@@ -1,5 +1,6 @@
 {
   "name": "semantic-release-tap",
+  "version": "0.0.0-dev",
   "scripts": {
     "test:r": "mocha index.spec.js",
     "test:w": "mocha index.spec.js --watch-files . --watch --no-timeout",
