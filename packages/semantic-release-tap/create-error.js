@@ -10,6 +10,9 @@ exports.createError = function createError(code, context) {
     case 'EREADPACKAGE':
       message = `Falied to read ${JSON.stringify(path)}`;
       break;
+    case 'ENOPLUGIN':
+      message = `Missing plugin ${JSON.stringify(path)}`;
+      break;
   }
 
   return new SemanticReleaseError(message, code, details);

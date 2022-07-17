@@ -10,12 +10,12 @@
 
 ## TODO
 
-- [ ] semantic-release
-  - [ ] update all related dependent package (try to run semrel for @acme/bar package dep @acme/foo should be updated to next version of foo)
-  - [ ] need find api which works with workspaces
+- [ ] update all related dependent package (try to run semrel for @acme/bar package dep @acme/foo should be updated to next version of foo)
 - [ ] wireit
 - [ ] switch to mjs
 - [ ] remove @acme/bar from semantic-release-tap
+- [ ] verify conditions put plugin (after semantic-release/git)
+- [ ] verify conditions npm publish do not use tarball
 
 ## Commands
 

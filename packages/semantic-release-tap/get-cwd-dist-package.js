@@ -14,5 +14,10 @@ exports.getCwdDistPackage = async function getCwdDistPackage({ cwd, plugins }) {
     });
   });
 
+  Object.defineProperty(result, '_path', {
+    enumerable: false,
+    value: cwdDistPackagePath,
+  });
+
   return result;
 };

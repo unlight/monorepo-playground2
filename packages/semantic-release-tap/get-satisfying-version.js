@@ -2,7 +2,10 @@ const { execSync } = require('child_process');
 const findVersions = require('find-versions');
 const semverMaxSatisfying = require('semver/ranges/max-satisfying');
 
-exports.getSatisfyingTagVersion = function getSatisfyingTagVersion({ name, range }) {
+/**
+ * Get max satisfying version from git tags
+ */
+exports.getSatisfyingVersion = async function getSatisfyingVersion({ name, range }) {
 	let command = `git rev-list --max-count=-1 --tags="${name}-v[0-9]*\\.[0-9]*\\.*"`;
 	const commits = execSync(command, { encoding: 'utf8' });
 	const pointsAt = commits

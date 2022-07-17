@@ -14,7 +14,6 @@ module.exports = {
       },
     ],
     '@semantic-release/changelog',
-    ['semantic-release-tap', {}],
     [
       '@semantic-release/npm',
       {
@@ -23,5 +22,6 @@ module.exports = {
     ],
     // '@semantic-release/github',
     '@semantic-release/git',
+    ['semantic-release-tap', {}],
   ],
 };
