@@ -22,7 +22,7 @@ exports.verifyConditions = async function verifyConditions(pluginConfig, context
     logger,
   } = context;
 
-  await verifyConfig({ plugins });
+  await verifyConfig({ plugins, pluginConfig });
   await getCwdDistPackage({ cwd, plugins });
 
   const root = await getGitRoot(cwd);

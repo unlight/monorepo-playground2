@@ -1,26 +1,45 @@
 const AggregateError = require('aggregate-error');
 const { createError } = require('./create-error.js');
 
-exports.verifyConfig = async function verifyConfig({ plugins }) {
+exports.verifyConfig = async function verifyConfig({ plugins, pluginConfig }) {
   const errors = [];
-  const npm = plugins
-    .map(toPlugin)
-    .find(plugin => plugin?.[0] === '@semantic-release/npm');
+  const normalizedPlugins = plugins.map(toPlugin);
+  const npmIndex = normalizedPlugins.findIndex(
+    plugin => plugin?.[0] === '@semantic-release/npm',
+  );
+  const gitIndex = normalizedPlugins.findIndex(
+    plugin => plugin?.[0] === '@semantic-release/git',
+  );
+  const pluginIndex = normalizedPlugins.findIndex(
+    plugin => plugin?.[0] === 'semantic-release-tap',
+  );
 
-  if (!npm) {
+  if (npmIndex === -1) {
     errors.push(createError('ENOPLUGIN', { path: '@semantic-release/npm' }));
   }
 
-  const git = plugins
-    .map(toPlugin)
-    .find(plugin => plugin?.[0] === '@semantic-release/git');
-
-  if (!git) {
+  if (gitIndex === -1) {
     errors.push(createError('ENOPLUGIN', { path: '@semantic-release/git' }));
   }
 
-  // TODO: verify conditions put plugin (after semantic-release/git and after npm)
-  // TODO: verify conditions npm publish do not use tarball
+  if (!(pluginIndex > npmIndex && pluginIndex > gitIndex)) {
+    errors.push(createError('EPLUGINPLACE', { path: 'semantic-release-tap' }));
+  }
+
+  if (
+    typeof pluginConfig.prefix !== 'undefined' &&
+    !(
+      typeof pluginConfig.prefix === 'string' &&
+      ['^', '~', ''].includes(pluginConfig.prefix)
+    )
+  ) {
+    errors.push(
+      createError('EINVALIDCONFIG', {
+        name: 'prefix',
+        value: pluginConfig.prefix,
+      }),
+    );
+  }
 
   if (errors.length > 0) {
     throw new AggregateError(errors);

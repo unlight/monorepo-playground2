@@ -9,9 +9,45 @@ it('smoke', async () => {
   assert.ok(plugin);
 });
 
-it('verifyConditions plugin', async () => {
-  const context = createContext({ cwd: __dirname });
-  await plugin.verifyConditions({}, context);
+describe('verifyConditions', () => {
+  it('verifyConditions plugin', async () => {
+    const context = createContext({ cwd: __dirname });
+    await plugin.verifyConditions({}, context);
+  });
+
+  it('plugin should be after npm and git', async () => {
+    const context = createContext({
+      options: {
+        plugins: [
+          '@semantic-release/npm',
+          'semantic-release-tap',
+          '@semantic-release/git',
+        ],
+      },
+    });
+
+    await assert.rejects(
+      plugin.verifyConditions({}, context),
+      'should be placed after npm and git',
+    );
+  });
+
+  it('verify prefix configuration', async () => {
+    const context = createContext({});
+
+    await assert.rejects(async () => {
+      return await plugin.verifyConditions({ prefix: '!' }, context);
+    }, 'Invalid value');
+  });
+
+  [{ prefix: '' }, { prefix: '~' }, { prefix: '^' }, { prefix: undefined }].forEach(
+    ({ prefix }) => {
+      it(`verify prefix configuration ${prefix}`, async () => {
+        const context = createContext({});
+        return await plugin.verifyConditions({ prefix }, context);
+      });
+    },
+  );
 });
 
 it('prepare plugin', async () => {
