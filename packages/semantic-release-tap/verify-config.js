@@ -46,11 +46,11 @@ exports.verifyConfig = async function verifyConfig({ plugins, pluginConfig }) {
   }
 };
 
-function toPlugin(p) {
-  if (Array.isArray(p)) return p;
-  if (typeof p === 'string') {
-    return [p];
+function toPlugin(plugin) {
+  if (Array.isArray(plugin)) return plugin;
+  if (typeof plugin === 'string') {
+    return [plugin];
   }
 
-  return p;
+  return plugin;
 }
