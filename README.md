@@ -33,6 +33,14 @@
 - npm pkg get repository.directory --json -ws
 - nx run-many --target=build --all
 
+## Projects dedicated to semantic release and monorepo
+
+- https://github.com/semantic-release-plus/semantic-release-plus
+- https://github.com/qiwi/multi-semantic-release
+- https://github.com/dhoulb/multi-semantic-release
+- https://github.com/pmowrer/semantic-release-monorepo
+- https://github.com/atlassian/lerna-semantic-release
+
 ## Resources
 
 - https://github.com/NiGhTTraX/ts-monorepo
