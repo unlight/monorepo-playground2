@@ -40,6 +40,7 @@
 - https://github.com/dhoulb/multi-semantic-release
 - https://github.com/pmowrer/semantic-release-monorepo
 - https://github.com/atlassian/lerna-semantic-release
+- https://github.com/semrel-extra/zx-bulk-release
 
 ## Resources
 
