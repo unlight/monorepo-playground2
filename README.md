@@ -23,7 +23,7 @@
 - npm run build -w @acme/bar
 - npm run -w packages/semantic-release-tap test:w
 - npm run -w packages/semantic-release-tap build
-- npm --node-options --inspect run -w packages/semantic-release-tap semantic-release -- --no-ci
+- npm --node-options --inspect -w packages/semantic-release-tap run semantic-release -- --no-ci
 - npx syncpack list-mismatches
 - npx syncpack fix-mismatches --dev --peer --prod
 - npm run -w examples/nestjs start:dev

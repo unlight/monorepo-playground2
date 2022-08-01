@@ -38,11 +38,11 @@ exports.verifyConditions = async function verifyConditions(pluginConfig, context
   }
 };
 
-// exports.analyzeCommits = async function analyzeCommits(pluginConfig, context) {
-//   // TODO: Remove test
-//   // d(context);
-//   return 'patch';
-// };
+exports.analyzeCommits = async function analyzeCommits(pluginConfig, context) {
+  // TODO: Remove test
+  // d(context);
+  return 'patch';
+};
 
 /**
  * @param {Config} pluginConfig
